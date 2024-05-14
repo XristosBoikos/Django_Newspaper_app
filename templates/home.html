@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    Hi {{ user.username }}! You are {{ user.age }} years old.
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button class="btn btn-outline-primary me-2" type="submit">Log Out</button>
+
+        <a href="{% url 'article_list' %}" class="btn btn-outline-primary me-2">All Articles</a>
+    </form>
+{% else %}
+    <p>You are not logged in.</p>
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <button class="btn btn-outline-primary me-2" type="submit">Log In</button>
+    </form>
+    <p></p>
+    <form method="post" action="{% url 'signup' %}">
+        {% csrf_token %}
+        <button class="btn btn-primary" type="submit">Sign Up</button>
+    </form>
+{% endif %}
+{% endblock content %}
